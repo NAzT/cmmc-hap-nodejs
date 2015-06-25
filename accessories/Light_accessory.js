@@ -1,8 +1,25 @@
 // HomeKit types required
 var types = require("./types.js")
 var exports = module.exports = {};
+var mqtt    = require('mqtt');
+var client  = mqtt.connect('mqtt://128.199.104.122');
+ 
 
-var execute = function(accessory,characteristic,value){ console.log("executed accessory: " + accessory + ", and characteristic: " + characteristic + ", with value: " +  value + "."); }
+var execute = function(accessory,characteristic,value){ 
+
+    client.on('connect', function () {
+
+    });
+ 
+// client.on('message', function (topic, message) {
+//   // message is Buffer 
+//   console.log(message.toString());
+//   client.end();
+// });
+
+
+
+    console.log("executed accessory: " + accessory + ", and characteristic: " + characteristic + ", with value: " +  value + "."); }
 
 exports.accessory = {
   displayName: "Light 1",
@@ -75,7 +92,20 @@ exports.accessory = {
 		designedMaxLength: 255   
     },{
     	cType: types.POWER_STATE_CTYPE,
-    	onUpdate: function(value) { console.log("Change:",value); execute("Test Accessory 1", "light service", value); },
+    	onUpdate: function(value) { 
+          if (value == true) {
+              client.publish('esp8266-18:fe:34:fe:81:e9', '0');
+              client.publish('esp8266-18:fe:34:fe:81:d3', '0');
+              client.publish('esp8266-18:fe:34:fe:c0:ff', '0');
+
+          }
+          else {
+              client.publish('esp8266-18:fe:34:fe:81:e9', '1');
+              client.publish('esp8266-18:fe:34:fe:81:d3', '1');
+              client.publish('esp8266-18:fe:34:fe:c0:ff', '1');
+          }            
+
+        },
     	perms: ["pw","pr","ev"],
 		format: "bool",
 		initialValue: false,

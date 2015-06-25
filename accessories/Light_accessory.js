@@ -96,15 +96,15 @@ exports.accessory = {
     	onUpdate: function(value) { 
             console.log(value);
           if (value == true) {
-              client.publish('esp8266/18:fe:34:fe:81:e9/command', '1');
-              client.publish('esp8266/18:fe:34:fe:81:d3/command', '1');
-              client.publish('esp8266/18:fe:34:fe:c0:ff/command', '1');
+              client.publish('esp8266/18:fe:34:fe:81:e9/command', '1', { retain: true});
+              client.publish('esp8266/18:fe:34:fe:81:d3/command', '1', { retain: true});
+              client.publish('esp8266/18:fe:34:fe:c0:ff/command', '1', { retain: true});
 
           }
           else {
-              client.publish('esp8266/18:fe:34:fe:81:e9/command', '0');
-              client.publish('esp8266/18:fe:34:fe:81:d3/command', '0');
-              client.publish('esp8266/18:fe:34:fe:c0:ff/command', '0');
+              client.publish('esp8266/18:fe:34:fe:81:e9/command', '0', { retain: true});
+              client.publish('esp8266/18:fe:34:fe:81:d3/command', '0', { retain: true});
+              client.publish('esp8266/18:fe:34:fe:c0:ff/command', '0', { retain: true});
           }            
 
         },

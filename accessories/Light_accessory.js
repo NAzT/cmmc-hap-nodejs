@@ -8,6 +8,7 @@ var client  = mqtt.connect('mqtt://128.199.104.122');
 var execute = function(accessory,characteristic,value){ 
 
     client.on('connect', function () {
+        console.log("CONNECTED");
 
     });
  
@@ -93,16 +94,17 @@ exports.accessory = {
     },{
     	cType: types.POWER_STATE_CTYPE,
     	onUpdate: function(value) { 
+            console.log(value);
           if (value == true) {
-              client.publish('esp8266-18:fe:34:fe:81:e9', '0');
-              client.publish('esp8266-18:fe:34:fe:81:d3', '0');
-              client.publish('esp8266-18:fe:34:fe:c0:ff', '0');
+              client.publish('esp8266/18:fe:34:fe:81:e9/command', '1');
+              client.publish('esp8266/18:fe:34:fe:81:d3/command', '1');
+              client.publish('esp8266/18:fe:34:fe:c0:ff/command', '1');
 
           }
           else {
-              client.publish('esp8266-18:fe:34:fe:81:e9', '1');
-              client.publish('esp8266-18:fe:34:fe:81:d3', '1');
-              client.publish('esp8266-18:fe:34:fe:c0:ff', '1');
+              client.publish('esp8266/18:fe:34:fe:81:e9/command', '0');
+              client.publish('esp8266/18:fe:34:fe:81:d3/command', '0');
+              client.publish('esp8266/18:fe:34:fe:c0:ff/command', '0');
           }            
 
         },
